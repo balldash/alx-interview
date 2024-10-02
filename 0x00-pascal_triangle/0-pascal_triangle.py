@@ -3,7 +3,11 @@
 module for pascal's triangle
 """
 
+
 def pascal_triangle(n):
+    """
+    Generates pascal's triangle given n for rows
+    """
     if n <= 0:
         return []
     triangle = [[1]]
