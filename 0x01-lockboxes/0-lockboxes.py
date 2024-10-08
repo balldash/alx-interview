@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+Solution to lockboxes problem
+"""
+
 
 def canUnlockAll(boxes):
     """
@@ -10,6 +14,8 @@ def canUnlockAll(boxes):
     Returns:
         bool: True if all boxes can be opened, else False.
     """
+
+
     n = len(boxes)
     opened = [False] * n
     opened[0] = True
