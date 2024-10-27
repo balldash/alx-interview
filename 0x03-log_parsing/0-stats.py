@@ -6,19 +6,18 @@ import sys
 import signal
 
 
-def print_stats(total_size, status_counts):
+def print_stats(total_size, status):
     """
     Print the total file size and count of each status code.
 
     Args:
         total_size (int): The total size of all files.
-        status_count (dict): A dictionary with status codes as keys and their
-    counts as values.
+        status (dict): A dict with status codes as keys and their counts.
     """
     print(f"File size: {total_size}")
-    for code in sorted(status_counts.keys()):
-        if status_counts[code] > 0:
-            print(f"{code}: {status_counts[code]}")
+    for code in sorted(status.keys()):
+        if status[code] > 0:
+            print(f"{code}: {status[code]}")
 
 
 def signal_handler(sig, frame):
@@ -30,10 +29,12 @@ def signal_handler(sig, frame):
         sig (int): The signal number.
         frame (frame object): The current stack frame.
     """
+    global total_size, status
     print_stats(total_size, status)
     sys.exit(0)
 
 
+# Set up signal handler
 signal.signal(signal.SIGINT, signal_handler)
 
 total_size = 0
