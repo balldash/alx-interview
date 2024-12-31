@@ -6,29 +6,18 @@ Module for making change
 
 def makeChange(coins, total):
     """
-    A function to calculate the change.
+    A greedy approach to making change
     """
-    def dp(amount, memo):
-        """
-        A dynamic function to break down the problem better.
-        """
-        if amount in memo:
-            return memo[amount]
-        if amount == 0:
-            return 0
-        if amount < 0:
-            return float('inf')
-
-        min_coins = float('inf')
-        for coin in coins:
-            num_coins = dp(amount - coin, memo) + 1
-            min_coins = min(min_coins, num_coins)
-        
-        memo[amount] = min_coins
-        return memo[amount]
-
     if total <= 0:
         return 0
-    
-    result = dp(total, {})
-    return result if result != float('inf') else -1
+
+    # Create a list to store the minimum number of coins for each value up to total
+    dp = [float('inf')] * (total + 1)
+    dp[0] = 0  # Base case: no coins needed to make 0 total
+
+    for coin in coins:
+        for amount in range(coin, total + 1):
+            if dp[amount - coin] != float('inf'):
+                dp[amount] = min(dp[amount], dp[amount - coin] + 1)
+
+    return dp[total] if dp[total] != float('inf') else -1
