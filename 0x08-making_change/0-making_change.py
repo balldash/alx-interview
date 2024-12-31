@@ -15,17 +15,23 @@ def makeChange(coins, total):
     Returns:
     int: Minimum number of coins neede, or -1 if the total cannont be met.
     """
-    if total <= 0:
+    def dp(amount, memo):
+        if amount in memo:
+            return memo[amount]
+        if amount == 0:
+            return 0
+        if amount < 0:
+            return float('inf')
+
+        min_coins = float('inf')
+        for coin in coins:
+            num_coins = dp(amount - coin, memo) + 1
+            min_coins = min(min_coins, num_coins)
+
+        memo[amount] = min_coins
+        return memo[amount]
+    if total <=0:
         return 0
-    check = 0
-    temp = 0
-    coins.sort(reverse=True)
-    for i in coins:
-        while check < total:
-            check += 1
-            temp += 1
-        if check == total:
-            return temp
-        check -= 1
-        temp -= 1
-    return -1
+    result = dp(total, {})
+    return result if result != float('inf') else -1
+
